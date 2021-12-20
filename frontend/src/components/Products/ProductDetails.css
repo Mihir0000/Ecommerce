@@ -1,5 +1,5 @@
 .ProductDetails {
-    background-color: rgb(214, 214, 214);
+    background-color: rgb(255, 255, 255);
     width: 100vw;
     max-width: 100%;
     padding: 6vmax;
@@ -149,6 +149,53 @@
 .submitReview:hover {
     background-color: rgb(197, 68, 45);
     transform: scale(1.1);
+}
+
+.reviewsHeading {
+    color: #202020ea;
+    font: 500 1.4vmax "Roboto";
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.258);
+    padding: 1vmax;
+    width: 20vmax;
+    margin: auto;
+    margin-bottom: 4vmax;
+}
+
+.reviewCard {
+    flex: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.258);
+    border: 1px solid rgba(54, 54, 54, 0.177);
+    width: 30vmax;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1vmax;
+    padding: 3vmax;
+}
+
+.reviewCard > img {
+    width: 5vmax;
+}
+
+.reviewCard > p {
+    color: rgba(0, 0, 0, 0.888);
+    font: 600 0.9vmax "Roboto";
+}
+.reviewCard > span {
+    color: rgba(0, 0, 0, 0.433);
+    font: 300 0.8vmax "cursive";
+}
+
+.noReviews {
+    font: 400 1.3vmax "Gill Sans";
+    text-align: center;
+    color: rgba(0, 0, 0, 0.546);
+}
+
+.reviews {
+    display: flex;
+    overflow: auto;
 }
 
 @media screen and (max-width: 600px) {
