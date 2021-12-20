@@ -3,14 +3,12 @@ import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProductDetails } from "../../actions/productAction";
-import { useParams } from "react-router-dom";
 import ReactsStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 
 const ProductDetails = ({ match }) => {
-    const { id } = useParams();
     const alert = useAlert();
     const dispatch = useDispatch();
 
@@ -23,8 +21,8 @@ const ProductDetails = ({ match }) => {
             alert.error(error);
             dispatch(clearErrors());
         }
-        dispatch(getProductDetails(id));
-    }, [dispatch, id, error, alert]);
+        dispatch(getProductDetails(match.params.id));
+    }, [dispatch, match.params.id, error, alert]);
 
     const options = {
         edit: false,
