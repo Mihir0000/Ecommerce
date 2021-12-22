@@ -43,6 +43,11 @@ footer {
     font-family: "Roboto", "Droid Sans", "Chilanka";
     color: #eb4034;
 }
+.midFooter > h4 {
+    font-size: 3vmax;
+    font-family: "Roboto", "Droid Sans", "Chilanka";
+    color: gray;
+}
 
 .midFooter > p {
     max-width: 60%;

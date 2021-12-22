@@ -12,9 +12,7 @@ const Home = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, products, productsCount } = useSelector(
-        (state) => state.products
-    );
+    const { loading, error, products } = useSelector((state) => state.products);
 
     useEffect(() => {
         if (error) {
@@ -30,7 +28,7 @@ const Home = () => {
                 <Loader />
             ) : (
                 <Fragment>
-                    <MetaData title="ECOMMERCE" />
+                    <MetaData title="ECOMMERCE (Baidya Store)" />
                     <div className="banner">
                         <p>Welcome to Ecommerce</p>
                         <h1>FIND AMAZING PRODUCT BELLOW</h1>
