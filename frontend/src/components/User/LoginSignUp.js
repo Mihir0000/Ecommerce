@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
 
-const LoginSignUp = ({ history }) => {
+const LoginSignUp = ({ history, location }) => {
     const dispatch = useDispatch();
     const alert = useAlert();
     const { error, loading, isAuthenticated } = useSelector(
@@ -64,15 +64,19 @@ const LoginSignUp = ({ history }) => {
         }
     };
 
+    const redirect = location.search
+        ? location.search.split("=")[1]
+        : "/account";
+
     useEffect(() => {
         if (error) {
             alert.error(error);
             dispatch(clearErrors);
         }
         if (isAuthenticated) {
-            history.push("/account");
+            history.push(redirect);
         }
-    }, [dispatch, error, alert, isAuthenticated, history]);
+    }, [dispatch, error, alert, isAuthenticated, history, redirect]);
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {
