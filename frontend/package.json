@@ -12,6 +12,8 @@
         "@mui/icons-material": "^5.2.4",
         "@mui/material": "^5.2.4",
         "@mui/styles": "^5.2.3",
+        "@stripe/react-stripe-js": "^1.7.0",
+        "@stripe/stripe-js": "^1.22.0",
         "@testing-library/jest-dom": "^5.16.1",
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^12.8.3",
