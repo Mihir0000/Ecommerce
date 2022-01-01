@@ -43,7 +43,10 @@ const Home = () => {
                     <div className="container" id="container">
                         {products &&
                             products.map((product) => (
-                                <ProductCard product={product} />
+                                <ProductCard
+                                    key={product._id}
+                                    product={product}
+                                />
                             ))}
                     </div>
                 </Fragment>

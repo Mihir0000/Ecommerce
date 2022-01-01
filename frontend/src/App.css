@@ -2,6 +2,9 @@
     margin: 0;
     scroll-behavior: smooth;
 }
+body {
+    cursor: url("./images/cursor.png"), auto;
+}
 
 /* Chorme , safari, Edge, opera */
 input::-webkit-outer-spin-button,
