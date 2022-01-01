@@ -40,6 +40,7 @@ import UpdateUser from "./components/Admin/UpdateUser";
 import ProductReviews from "./components/Admin/ProductReviews";
 import About from "./components/layout/About/About";
 import Contact from "./components/layout/Contact/Contact";
+import NotFound from "./components/layout/NotFound/NotFound";
 
 function App() {
     const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -164,6 +165,13 @@ function App() {
                 exact
                 path="/admin/reviews"
                 component={ProductReviews}
+            />
+            <Route
+                component={
+                    window.location.pathname === "/process/payment"
+                        ? null
+                        : NotFound
+                }
             />
             <Footer />
         </Router>
