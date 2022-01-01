@@ -31,6 +31,15 @@ import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
 import Dashboard from "./components/Admin/Dashboard";
 import ProductList from "./components/Admin/ProductList";
+import NewProduct from "./components/Admin/NewProduct";
+import UpdateProduct from "./components/Admin/UpdateProduct";
+import OrderList from "./components/Admin/OrderList";
+import ProcessOrder from "./components/Admin/ProcessOrder";
+import UsersList from "./components/Admin/UsersList";
+import UpdateUser from "./components/Admin/UpdateUser";
+import ProductReviews from "./components/Admin/ProductReviews";
+import About from "./components/layout/About/About";
+import Contact from "./components/layout/Contact/Contact";
 
 function App() {
     const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -61,6 +70,8 @@ function App() {
             <Route exact path="/products" component={Products} />
             <Route path="/products/:keyword" component={Products} />
             <Route exact path="/search" component={Search} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/contact" component={Contact} />
             <ProtectedRoute exact path="/account" component={Profile} />
             <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
             <ProtectedRoute
@@ -111,6 +122,48 @@ function App() {
                 exact
                 path="/admin/products"
                 component={ProductList}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/product"
+                component={NewProduct}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/product/:id"
+                component={UpdateProduct}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/orders"
+                component={OrderList}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/order/:id"
+                component={ProcessOrder}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/users"
+                component={UsersList}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/user/:id"
+                component={UpdateUser}
+            />
+            <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/reviews"
+                component={ProductReviews}
             />
             <Footer />
         </Router>

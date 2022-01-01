@@ -83,7 +83,7 @@ const OrderDetails = ({ match }) => {
                                     </span>
                                 </div>
                             </div>
-                            <Typography>Order Details</Typography>
+                            <Typography>Order Status</Typography>
                             <div className="orderDetailsContainerBox">
                                 <div>
                                     <p

@@ -267,7 +267,6 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 // Delete User  --Admin
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.params.id);
-    // we will add cloudinary later
 
     if (!user) {
         return next(
@@ -277,6 +276,10 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
             )
         );
     }
+
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.v2.uploader.destroy(imageId);
 
     await user.remove();
 

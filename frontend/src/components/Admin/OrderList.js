@@ -2,11 +2,6 @@ import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import "./ProductList.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-    getAdminProduct,
-    clearErrors,
-    deleteProduct,
-} from "../../actions/productAction";
 import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
@@ -14,18 +9,23 @@ import MetaData from "../layout/MetaData";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Sidebar from "./Sidebar";
-import { DELETE_PRODUCT_RESET } from "../../constants/productConstants";
+import {
+    deleteOrder,
+    getAllOrders,
+    clearErrors,
+} from "../../actions/orderAction";
+import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
-const ProductList = ({ history }) => {
+const OrderList = ({ history }) => {
     const dispatch = useDispatch();
     const alert = useAlert();
-    const { error, products } = useSelector((state) => state.products);
+    const { error, orders } = useSelector((state) => state.allOrders);
     const { error: deleteError, isDeleted } = useSelector(
-        (state) => state.product
+        (state) => state.order
     );
 
-    const deleteProductHandler = (id) => {
-        dispatch(deleteProduct(id));
+    const deleteOrderHandler = (id) => {
+        dispatch(deleteOrder(id));
     };
 
     useEffect(() => {
@@ -38,30 +38,40 @@ const ProductList = ({ history }) => {
             dispatch(clearErrors());
         }
         if (isDeleted) {
-            alert.success("Product Deleted Successfuly.");
-            history.push("/admin/dashboard");
-            dispatch({ type: DELETE_PRODUCT_RESET });
+            alert.success("Order Deleted Successfuly.");
+            history.push("/admin/orders");
+            dispatch({ type: DELETE_ORDER_RESET });
         }
 
-        dispatch(getAdminProduct());
+        dispatch(getAllOrders());
     }, [dispatch, alert, error, deleteError, history, isDeleted]);
 
     const columns = [
-        { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.4 },
-        { field: "name", headerName: "Name", minWidth: 270, flex: 0.7 },
+        { field: "id", headerName: "Order ID", minWidth: 250, flex: 0.8 },
         {
-            field: "stock",
-            headerName: "Stock",
-            minWidth: 150,
-            flex: 0.3,
-            type: "number",
+            field: "status",
+            headerName: "Status",
+            minWidth: 140,
+            flex: 0.4,
+            cellClassName: (params) => {
+                return params.getValue(params.id, "status") === "Delivered"
+                    ? "greenColor"
+                    : "redColor";
+            },
         },
         {
-            field: "price",
-            headerName: "Price",
-            minWidth: 100,
-            flex: 0.3,
+            field: "itemsQty",
+            headerName: "Items Qty",
             type: "number",
+            minWidth: 140,
+            flex: 0.3,
+        },
+        {
+            field: "amount",
+            headerName: "Amount",
+            type: "number",
+            minWidth: 150,
+            flex: 0.4,
         },
         {
             field: "actions",
@@ -74,7 +84,7 @@ const ProductList = ({ history }) => {
                 return (
                     <Fragment>
                         <Link
-                            to={`/admin/product/${params.getValue(
+                            to={`/admin/order/${params.getValue(
                                 params.id,
                                 "id"
                             )}`}
@@ -83,7 +93,7 @@ const ProductList = ({ history }) => {
                         </Link>
                         <Button
                             onClick={() =>
-                                deleteProductHandler(
+                                deleteOrderHandler(
                                     params.getValue(params.id, "id")
                                 )
                             }
@@ -97,23 +107,23 @@ const ProductList = ({ history }) => {
     ];
 
     const rows = [];
-    products &&
-        products.forEach((item) => {
+    orders &&
+        orders.forEach((item) => {
             rows.push({
                 id: item._id,
-                stock: item.stock,
-                price: item.price,
-                name: item.name,
+                itemsQty: item.orderItems.length,
+                amount: item.totalPrice,
+                status: item.orderStatus,
             });
         });
 
     return (
         <Fragment>
-            <MetaData title={"All Products --Admin"} />
+            <MetaData title={"ALL ORDERS --Admin"} />
             <div className="dashboard">
                 <Sidebar />
                 <div className="productListContainer">
-                    <h1 id="productListHeading">All Products</h1>
+                    <h1 id="productListHeading">All Orders</h1>
                     <DataGrid
                         rows={rows}
                         columns={columns}
@@ -128,4 +138,4 @@ const ProductList = ({ history }) => {
     );
 };
 
-export default ProductList;
+export default OrderList;
