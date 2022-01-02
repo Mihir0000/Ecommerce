@@ -23,15 +23,23 @@ import { Rating } from "@material-ui/lab";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 
 const ProductDetails = ({ match }) => {
-    const alert = useAlert();
     const dispatch = useDispatch();
+    const alert = useAlert();
 
     const { product, loading, error } = useSelector(
         (state) => state.productDetails
     );
+
     const { success, error: reviewError } = useSelector(
         (state) => state.newReview
     );
+
+    const options = {
+        size: "large",
+        value: product.ratings,
+        readOnly: true,
+        precision: 0.5,
+    };
 
     const [quantity, setQuantity] = useState(1);
     const [open, setOpen] = useState(false);
@@ -54,7 +62,7 @@ const ProductDetails = ({ match }) => {
 
     const addToCartHandler = () => {
         dispatch(addItemsToCart(match.params.id, quantity));
-        alert.success("Item Added to Cart.");
+        alert.success("Item Added To Cart");
     };
 
     const submitReviewToggle = () => {
@@ -63,6 +71,7 @@ const ProductDetails = ({ match }) => {
 
     const reviewSubmitHandler = () => {
         const myForm = new FormData();
+
         myForm.set("rating", rating);
         myForm.set("comment", comment);
         myForm.set("productId", match.params.id);
@@ -77,10 +86,12 @@ const ProductDetails = ({ match }) => {
             alert.error(error);
             dispatch(clearErrors());
         }
+
         if (reviewError) {
             alert.error(reviewError);
             dispatch(clearErrors());
         }
+
         if (success) {
             alert.success("Review Submitted Successfully");
             dispatch({ type: NEW_REVIEW_RESET });
@@ -88,43 +99,37 @@ const ProductDetails = ({ match }) => {
         dispatch(getProductDetails(match.params.id));
     }, [dispatch, match.params.id, error, alert, reviewError, success]);
 
-    const options = {
-        size: "large",
-        value: product.ratings,
-        readOnly: true,
-        precision: 0.5,
-    };
-
     return (
         <Fragment>
             {loading ? (
                 <Loader />
             ) : (
                 <Fragment>
-                    <MetaData
-                        title={`${product.name} --ECOMMERCE (Baidya Store)`}
-                    />
+                    <MetaData title={`${product.name} -- ECOMMERCE`} />
                     <div className="ProductDetails">
                         <div>
-                            <Carousel className="CarouselImage">
+                            <Carousel>
                                 {product.images &&
-                                    product.images.map((item, index) => (
+                                    product.images.map((item, i) => (
                                         <img
+                                            className="CarouselImage"
+                                            key={i}
                                             src={item.url}
-                                            key={item.url}
-                                            alt={`${index} Slide`}
+                                            alt={`${i} Slide`}
                                         />
                                     ))}
                             </Carousel>
                         </div>
+
                         <div>
                             <div className="detailsBlock-1">
                                 <h2>{product.name}</h2>
-                                <p>Product #{product._id}</p>
+                                <p>Product # {product._id}</p>
                             </div>
                             <div className="detailsBlock-2">
                                 <Rating {...options} />
                                 <span className="detailsBlock-2-span">
+                                    {" "}
                                     ({product.numOfReviews} Reviews)
                                 </span>
                             </div>
@@ -137,8 +142,8 @@ const ProductDetails = ({ match }) => {
                                         </button>
                                         <input
                                             readOnly
-                                            value={quantity}
                                             type="number"
+                                            value={quantity}
                                         />
                                         <button onClick={increaseQuantity}>
                                             +
@@ -153,8 +158,9 @@ const ProductDetails = ({ match }) => {
                                         Add to Cart
                                     </button>
                                 </div>
+
                                 <p>
-                                    Status :
+                                    Status:
                                     <b
                                         className={
                                             product.stock < 1
@@ -168,9 +174,11 @@ const ProductDetails = ({ match }) => {
                                     </b>
                                 </p>
                             </div>
+
                             <div className="detailsBlock-4">
                                 Description : <p>{product.description}</p>
                             </div>
+
                             <button
                                 onClick={submitReviewToggle}
                                 className="submitReview"
@@ -179,6 +187,7 @@ const ProductDetails = ({ match }) => {
                             </button>
                         </div>
                     </div>
+
                     <h3 className="reviewsHeading">REVIEWS</h3>
 
                     <Dialog
@@ -193,10 +202,11 @@ const ProductDetails = ({ match }) => {
                                 value={rating}
                                 size="large"
                             />
+
                             <textarea
+                                className="submitDialogTextArea"
                                 cols="30"
                                 rows="5"
-                                className="submitDialogTextArea"
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
                             ></textarea>
@@ -221,7 +231,10 @@ const ProductDetails = ({ match }) => {
                         <div className="reviews">
                             {product.reviews &&
                                 product.reviews.map((review) => (
-                                    <ReviewCard review={review} />
+                                    <ReviewCard
+                                        key={review._id}
+                                        review={review}
+                                    />
                                 ))}
                         </div>
                     ) : (
