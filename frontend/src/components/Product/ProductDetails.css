@@ -23,7 +23,7 @@
 }
 
 .CarouselImage {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 4px;
     padding: 5px;
     width: 300px;
@@ -36,7 +36,7 @@
 
 .detailsBlock-1 > p {
     color: rgba(54, 54, 54, 0.582);
-    font: 200 0.6vmax cursive;
+    font: 200 0.9vmax cursive;
 }
 
 .detailsBlock-2 {
@@ -220,7 +220,7 @@
 
     .detailsBlock-1 > p {
         text-align: center;
-        font-size: 1vmax;
+        font-size: 1.7vmax;
     }
 
     .detailsBlock-2 {
